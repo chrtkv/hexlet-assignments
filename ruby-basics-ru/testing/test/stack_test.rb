@@ -9,20 +9,42 @@ class StackTest < Minitest::Test
     assert { Stack.new.to_a == [] }
   end
 
-  def test_nil_when_pop_from_empty_stack
-    assert { Stack.new.pop!.nil? }
+  def test_empty_stack
+    stack = Stack.new
+
+    assert { stack.pop!.nil? }
+    assert { stack.empty? }
+    assert { stack.size.zero? }
+    assert { stack.to_a == [] }
   end
 
   def test_push
     stack = Stack.new
+  
     stack.push!(1)
     assert { stack.size == 1 }
+
     stack.push!(2)
+    assert { stack.size == 2 }
+    assert { stack.to_a == [1, 2] }
+  end
+
+  def test_pop
+    stack = Stack.new [1, 2, 3, 4, 5]
+    stack.pop!
+    stack.pop!
+
+    assert { stack.size == 3 }
+    assert { stack.pop! == 3 }
     assert { stack.to_a == [1, 2] }
   end
 
   def test_clear
-    assert { Stack.new.push!(1).clear.to_a == [] }
+    stack = Stack.new %w[lala lola]
+    assert { !stack.empty? }
+
+    stack.clear!
+    assert { stack.empty? }
   end
   # END
 end
